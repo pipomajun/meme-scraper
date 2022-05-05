@@ -29,20 +29,39 @@ while ((i = rex.exec(html))) {
 
 // LOOP IT THROUGH EACH ITEMS IN ARRAY AND "SAVE" IT WITH THE CORRECT NAME
 for (let j = 0; j < 10; j++) {
-  https
-    .get(imgUrls[j], (res) => {
-      const path = `./memes/0${j + 1}.jpg`;
-      const stream = fs.createWriteStream(path);
+  if (j < 9) {
+    https
+      .get(imgUrls[j], (res) => {
+        const path = `./memes/0${j + 1}.jpg`;
+        const stream = fs.createWriteStream(path);
 
-      res.pipe(stream);
+        res.pipe(stream);
 
-      stream.on('finish', () => {
-        stream.close();
-        console.log('Image downloaded');
+        stream.on('finish', () => {
+          stream.close();
+          console.log('Image downloaded');
+        });
+      })
+      .on('error', (err) => {
+        // handle error
+        console.log(err);
       });
-    })
-    .on('error', (err) => {
-      // handle error
-      console.log(err);
-    });
+  } else {
+    https
+      .get(imgUrls[j], (res) => {
+        const path = `./memes/${j + 1}.jpg`;
+        const stream = fs.createWriteStream(path);
+
+        res.pipe(stream);
+
+        stream.on('finish', () => {
+          stream.close();
+          console.log('Image downloaded');
+        });
+      })
+      .on('error', (err) => {
+        // handle error
+        console.log(err);
+      });
+  }
 }
