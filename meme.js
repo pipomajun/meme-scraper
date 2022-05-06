@@ -16,7 +16,6 @@ try {
 // DECLARE VARIABLES
 const greeting = process.argv[2];
 const name = process.argv[3];
-
 const url = `https://api.memegen.link/images/bender/${greeting}/${name}.png`;
 
 https
